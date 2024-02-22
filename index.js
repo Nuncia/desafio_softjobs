@@ -37,10 +37,10 @@ app.use('/', router);
 
 app.use((error, req, res, next) => {
    console.log(error);
-   res.status(500).send('Error en el servidor');
+   res.status(500).send(`Error en el servidor: ${error}`);
 });
 
-const PORTs = 5003;
+const PORTs = process.env.PORT || 5003;
 
 app.listen(PORTs, () => {
    console.log(`Servidor escuchando en puerto ${PORTs}`);

@@ -45,7 +45,6 @@ const verificarToken = (req, res, next) => {
       const Bearer = Authorization.split(' ');
       const token = Bearer[1];
       const tokenVerificado = jwt.verify(token, process.env.SECRET_KEY);
-      // console.log(tokenVerificado);
       req.body = token;
       next();
    } catch (error) {
