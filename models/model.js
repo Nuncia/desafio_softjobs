@@ -1,8 +1,8 @@
 const { pool } = require('../database/connection');
 
-const agregarUsuario = async ({ email, password, rol, lenguaje }) => {
+const agregarUsuario = async ({ email, password, rol, lenguage }) => {
    try {
-      const values = [email, password, rol, lenguaje];
+      const values = [email, password, rol, lenguage];
       const consulta =
          'INSERT INTO usuarios (id,email, password, rol, lenguage) VALUES (default,$1, $2, $3, $4)';
       const { rowCount } = await pool.query(consulta, values);
@@ -16,20 +16,17 @@ const agregarUsuario = async ({ email, password, rol, lenguaje }) => {
    }
 };
 
-const validarUsuario = async ({ email, password }) => {
+const validarUsuario = async ({ email }) => {
    try {
-      const values = [email, password];
-      const consulta =
-         'SELECT * FROM usuarios WHERE email = $1 AND password = $2';
-      const { rows } = await pool.query(consulta, values);
-      if (rows.length > 0) {
-         console.log(rows);
+      const consulta = 'SELECT * FROM usuarios WHERE email = $1';
+      const { rows, rowCount } = await pool.query(consulta, [email]);
+      if (rowCount > 0) {
          return rows;
       } else {
          return false;
       }
    } catch (error) {
-      throw new Error('error al registrar el usuario');
+      throw new Error('Error al registrar el usuario');
    }
 };
 
